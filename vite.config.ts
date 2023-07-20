@@ -9,5 +9,9 @@ export default defineConfig(({ mode }) => {
       "process.env": dotenv.config({ path: envFiles }).parsed,
     },
     plugins: [react()],
+    server: {
+      port: 3000,
+    },
+    host: true,
   };
 });

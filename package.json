@@ -1,13 +1,16 @@
 {
+  "homepage": "https://eagles27.github.io/quizz/",
   "name": "quizz",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist",
     "prettier": "prettier 'src/**/*.tsx' --write",
     "eslint": "eslint \"**/*.+(js|jsx|ts|tsx)\"",
     "eslint:fix": "eslint --fix \"**/*.+(js|jsx|ts|tsx)\"",
@@ -35,6 +38,7 @@
     "eslint": "^8.44.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
+    "gh-pages": "^5.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.0"
   }
