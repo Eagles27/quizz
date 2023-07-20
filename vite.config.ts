@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
       "process.env": dotenv.config({ path: envFiles }).parsed,
     },
     plugins: [react()],
+    base: "/quizz/",
     server: {
       port: 3000,
     },
