@@ -1,7 +1,6 @@
 {
-  "homepage": "https://eagles27.github.io/quizz/",
+  "homepage": "https://eagles27.github.io/quizz",
   "name": "quizz",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
