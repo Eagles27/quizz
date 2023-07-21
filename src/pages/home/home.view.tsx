@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "../../lib/components/button";
 import TextField from "../../lib/components/textField";
 import TextInput from "../../lib/components/textInput";
@@ -14,8 +14,6 @@ const HomeView: React.FC = () => {
   const database = useSelector(
     (state: TRootState) => state.NotionSlice.database
   );
-
-  console.log(database);
 
   const [index, setIndex] = React.useState(GenerateQuestion(database.length));
   const [answer, setAnswer] = React.useState("");
