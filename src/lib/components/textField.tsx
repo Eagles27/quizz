@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 interface TextFieldProps {
-  label: string;
+  label: ReactNode;
 }
 
 const TextField: React.FC<TextFieldProps> = ({ label }) => {
@@ -17,9 +19,10 @@ const TextField: React.FC<TextFieldProps> = ({ label }) => {
         alignItems: "center",
         fontFamily: "Poppins",
         textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
+        whiteSpace: "pre-wrap",
         overflow: "hidden",
         fontSize: "1.5rem",
+        textAlign: "center",
       }}
     >
       <label>{label}</label>

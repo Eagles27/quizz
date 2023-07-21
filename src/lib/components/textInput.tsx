@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface TextInputProps {
   placeholder: string;
   customPadding?: string;
   customBorderRadius?: string;
   onInputChange: (value: string) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  value?: string;
+  disabled?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -12,18 +15,18 @@ const TextInput: React.FC<TextInputProps> = ({
   customPadding = "11px 47px 10px 19px",
   customBorderRadius = "20px",
   onInputChange,
+  onKeyDown,
+  value = "",
+  disabled = false,
 }) => {
-  const [inputValue, setInputValue] = useState("");
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
     onInputChange(event.target.value);
   };
 
   return (
     <input
       type="text"
-      value={inputValue}
+      value={value}
       onChange={handleInputChange}
       style={{
         color: "#000",
@@ -40,6 +43,8 @@ const TextInput: React.FC<TextInputProps> = ({
         width: "80%",
       }}
       placeholder={placeholder}
+      onKeyDown={onKeyDown}
+      disabled={disabled}
     />
   );
 };

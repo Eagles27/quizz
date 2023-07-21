@@ -6,6 +6,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
   const styles = {
     display: "flex",
+    minWidth: "300px",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "20px",
@@ -13,9 +14,10 @@ const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
     padding: "8px 12px",
     border: "none",
     cursor: "pointer",
-    fontSize: "32px",
+    fontSize: "28px",
     fontFamily: "Poppins",
     fontStyle: "normal",
+    color: "#000",
     fontWeight: 500,
     lineHeight: "150%",
     letterSpacing: "-0.12px",

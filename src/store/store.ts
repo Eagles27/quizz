@@ -12,6 +12,8 @@ import {
   persistReducer,
 } from "redux-persist";
 
+import NotionSlice from "./NotionSlice";
+
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 
 const persistConfig = {
@@ -19,7 +21,7 @@ const persistConfig = {
   storage,
 };
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({ NotionSlice });
 
 export type TRootState = ReturnType<typeof rootReducer>;
 export type TAppDispatch = typeof store.dispatch;
