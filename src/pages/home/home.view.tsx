@@ -2,62 +2,38 @@ import React from "react";
 import Button from "../../lib/components/button";
 import TextField from "../../lib/components/textField";
 import TextInput from "../../lib/components/textInput";
-import { useSelector } from "react-redux";
-import { TRootState, useAppDispatch } from "../../store/store";
-import { fetchNotionDatabase } from "../../store/NotionSlice";
-import GenerateQuestion from "../../utils/functions/generateQuestion";
-import { toast } from "react-toastify";
+import { TNotionDatabaseListFiltered } from "../../types/notionDabase";
 
-const HomeView: React.FC = () => {
-  const dispatch = useAppDispatch();
+interface IProps {
+  database: TNotionDatabaseListFiltered;
+  color: string;
+  wrongAnswer: boolean;
+  rightAnswer: string;
+  index: number;
+  answer: string;
+  refresh: () => void;
+  nextQuestion: () => void;
+  handleWrongAnswer: () => void;
+  setAnswer: (e: string) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
 
-  const database = useSelector(
-    (state: TRootState) => state.NotionSlice.database
-  );
-
-  const [index, setIndex] = React.useState(GenerateQuestion(database.length));
-  const [answer, setAnswer] = React.useState("");
-  const [rightAnswer, setRightAnswer] = React.useState("");
-  const [color, setColor] = React.useState("#E9D0AB");
-  const [wrongAnswer, setWrongAnswer] = React.useState(false);
-
-  const handleWrongAnswer = () => {
-    setWrongAnswer(false);
-    setAnswer("");
-    setColor("#E9D0AB");
-  };
-
-  const nextQuestion = () => {
-    const isAnswerCorrect = database[index].deutshWord === answer.trim();
-    if (answer.trim() === "") {
-      toast.error("Please type your answer");
-      return;
-    }
-    if (isAnswerCorrect) {
-      toast.success("Correct answer");
-      setColor("#E9D0AB");
-      setAnswer("");
-    } else {
-      setRightAnswer(database[index].deutshWord);
-      setWrongAnswer(true);
-      setColor("#F86E6E");
-    }
-
-    setIndex(GenerateQuestion(database.length));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      nextQuestion();
-    }
-  };
-
+const HomeView: React.FC<IProps> = ({
+  database,
+  color,
+  wrongAnswer,
+  rightAnswer,
+  index,
+  answer,
+  refresh,
+  nextQuestion,
+  handleWrongAnswer,
+  setAnswer,
+  handleKeyDown,
+}) => {
+  console.log("database", database);
   return database.length === 0 ? (
-    <Button
-      text="Refresh Data"
-      onClick={void dispatch(fetchNotionDatabase())}
-    />
+    <Button text="Refresh Data" onClick={refresh} />
   ) : (
     <div
       className="appContainer"
