@@ -1,5 +1,5 @@
 import Card from "../../lib/components/card";
-import test from "../../../public/data.json";
+import data from "../../data.json";
 import { Link } from "react-router-dom";
 
 const MenuView: React.FC = () => {
@@ -31,7 +31,7 @@ const MenuView: React.FC = () => {
             overflowY: "scroll",
           }}
         >
-          {test.map((item) => (
+          {data.map((item) => (
             <Link to={`/quizz/${item.databaseId}`} key={item.databaseId}>
               <Card title={item.name} />
             </Link>
