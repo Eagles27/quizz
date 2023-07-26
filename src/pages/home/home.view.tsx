@@ -2,62 +2,81 @@ import React from "react";
 import Button from "../../lib/components/button";
 import TextField from "../../lib/components/textField";
 import TextInput from "../../lib/components/textInput";
-import { useSelector } from "react-redux";
-import { TRootState, useAppDispatch } from "../../store/store";
-import { fetchNotionDatabase } from "../../store/NotionSlice";
-import GenerateQuestion from "../../utils/functions/generateQuestion";
-import { toast } from "react-toastify";
+import { TNotionDatabaseListFiltered } from "../../types/notionDabase";
+import IconButton from "../../lib/components/iconButton";
+import RefreshIcon from "../../icons/refreshIcon";
+import BackArrowIcon from "../../icons/backArrowIcon";
+import { Link } from "react-router-dom";
+import Loader from "../../lib/components/loader";
 
-const HomeView: React.FC = () => {
-  const dispatch = useAppDispatch();
+interface IProps {
+  database: TNotionDatabaseListFiltered;
+  color: string;
+  wrongAnswer: boolean;
+  rightAnswer: string;
+  index: number;
+  answer: string;
+  isLoading: boolean;
+  refresh: () => void;
+  nextQuestion: () => void;
+  handleWrongAnswer: () => void;
+  setAnswer: (e: string) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
 
-  const database = useSelector(
-    (state: TRootState) => state.NotionSlice.database
-  );
-
-  const [index, setIndex] = React.useState(GenerateQuestion(database.length));
-  const [answer, setAnswer] = React.useState("");
-  const [rightAnswer, setRightAnswer] = React.useState("");
-  const [color, setColor] = React.useState("#E9D0AB");
-  const [wrongAnswer, setWrongAnswer] = React.useState(false);
-
-  const handleWrongAnswer = () => {
-    setWrongAnswer(false);
-    setAnswer("");
-    setColor("#E9D0AB");
-  };
-
-  const nextQuestion = () => {
-    const isAnswerCorrect = database[index].deutshWord === answer.trim();
-    if (answer.trim() === "") {
-      toast.error("Please type your answer");
-      return;
-    }
-    if (isAnswerCorrect) {
-      toast.success("Correct answer");
-      setColor("#E9D0AB");
-      setAnswer("");
-    } else {
-      setRightAnswer(database[index].deutshWord);
-      setWrongAnswer(true);
-      setColor("#F86E6E");
-    }
-
-    setIndex(GenerateQuestion(database.length));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      nextQuestion();
-    }
-  };
-
+const HomeView: React.FC<IProps> = ({
+  database,
+  color,
+  wrongAnswer,
+  rightAnswer,
+  index,
+  answer,
+  isLoading,
+  refresh,
+  nextQuestion,
+  handleWrongAnswer,
+  setAnswer,
+  handleKeyDown,
+}) => {
   return database.length === 0 ? (
-    <Button
-      text="Refresh Data"
-      onClick={void dispatch(fetchNotionDatabase())}
-    />
+    <div
+      className="appContainer"
+      style={{
+        width: "100vw",
+        height: "100vh",
+        background: color,
+      }}
+    >
+      <div
+        className="content"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          height: "70%",
+          width: "100%",
+        }}
+      >
+        <TextField
+          label={
+            <>
+              Kein Inhalt verfügbar <br /> Bitte tippen Sie auf die Schaltfläche
+              unten
+            </>
+          }
+        />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Button text="Daten aktualisieren" onClick={refresh} />
+        )}
+
+        <Link to={"/quizz"}>
+          <IconButton icon={<BackArrowIcon />} />
+        </Link>
+      </div>
+    </div>
   ) : (
     <div
       className="appContainer"
@@ -102,8 +121,29 @@ const HomeView: React.FC = () => {
         {wrongAnswer ? (
           <Button text="VOLGENDE VRAAG" onClick={handleWrongAnswer} />
         ) : (
-          <Button text="GÜLTIG" onClick={nextQuestion} />
+          <>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Button text="GÜLTIG" onClick={nextQuestion} />
+            )}
+          </>
         )}
+        <div
+          className="bottomBar"
+          style={{
+            position: "fixed",
+            bottom: "50px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Link to={"/quizz"}>
+            <IconButton icon={<BackArrowIcon />} />
+          </Link>
+          <IconButton icon={<RefreshIcon />} onClick={refresh} />
+        </div>
       </div>
     </div>
   );

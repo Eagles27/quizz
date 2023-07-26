@@ -1,0 +1,34 @@
+[
+  {
+    "databaseId": "5087337dd4064be8b3e9805f9315737d",
+    "name": "Les animaux"
+  },
+  {
+    "databaseId": "3b5efa39a7914e81be4149f25811eac0",
+    "name": "Das Essen"
+  },
+  {
+    "databaseId": "bb7bd5392b2e47e7ad007acc00cecff0",
+    "name": "Die Hobbys"
+  },
+  {
+    "databaseId": "fa547c8194514d09a63965ee42482eef",
+    "name": "Emotions"
+  },
+  {
+    "databaseId": "9ff039bb3712481294f5039685fd9264",
+    "name": "Liste 1"
+  },
+  {
+    "databaseId": "0544bdd20c4546cdba04f49c9987f4fe",
+    "name": "Die Monate und die Jahreszeiten"
+  },
+  {
+    "databaseId": "6322a22f66f14555a04fd3c542850a2f",
+    "name": "Die Woche"
+  },
+  {
+    "databaseId": "964e9aa80a6e4ea9b5cddb539fd8a190",
+    "name": "Liste 2"
+  }
+]
