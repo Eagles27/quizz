@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { TError, TApiError } from "../types/error";
 import {
+  TApiResponse,
   TNotionDatabaseBody,
   TNotionDatabaseList,
-  TNotionDatabaseListFiltered,
 } from "../types/notionDabase";
 import httpClient from "../services/http";
 import { AxiosError } from "axios";
-import { v4 as uuidv4 } from "uuid";
 
 export interface INotionState {
   database: TNotionDatabaseList;
@@ -28,14 +27,14 @@ const initialState: INotionState = {
 };
 
 export const fetchNotionDatabase = createAsyncThunk<
-  TNotionDatabaseListFiltered,
+  TApiResponse,
   TNotionDatabaseBody,
   {
     rejectValue: TError<TApiError>;
   }
 >("notion/fetchNotionDatabase", async (body, { rejectWithValue }) => {
   try {
-    const response = await httpClient.post<TNotionDatabaseListFiltered>(
+    const response = await httpClient.post<TApiResponse>(
       "/notion/database",
       body
     );
@@ -61,11 +60,7 @@ export const notionSlice = createSlice({
     builder.addCase(fetchNotionDatabase.fulfilled, (state, action) => {
       state.Isloading = false;
       state.error = false;
-      const newDatabaseItem = {
-        id: uuidv4(),
-        value: action.payload,
-      };
-      state.database.push(newDatabaseItem);
+      state.database.push(action.payload);
     });
     builder.addCase(fetchNotionDatabase.rejected, (state) => {
       state.Isloading = false;

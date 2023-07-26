@@ -15,8 +15,11 @@ const HomeModel: React.FC = () => {
     (state: TRootState) => state.NotionSlice.database
   );
 
-  const filteredResponse = response.filter((item) => item.id === id);
-  console.log("filteredResponse", filteredResponse);
+  const isLoading = useSelector(
+    (state: TRootState) => state.NotionSlice.Isloading
+  );
+
+  const filteredResponse = response.filter((item) => item.databaseId === id);
   const database = filteredResponse.length > 0 ? filteredResponse[0].value : [];
 
   const [index, setIndex] = React.useState(GenerateQuestion(database.length));
@@ -51,9 +54,12 @@ const HomeModel: React.FC = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !wrongAnswer) {
       e.preventDefault();
       nextQuestion();
+    } else if (e.key === "Enter" && wrongAnswer) {
+      e.preventDefault();
+      handleWrongAnswer();
     }
   };
 
@@ -66,6 +72,7 @@ const HomeModel: React.FC = () => {
         rightAnswer,
         index,
         answer,
+        isLoading,
         refresh: () => void dispatch(fetchNotionDatabase({ id })),
         nextQuestion,
         handleWrongAnswer,

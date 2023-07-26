@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
-    base: "/quizz/",
+    base: "/quizz",
     server: {
       port: 3000,
     },
