@@ -17,6 +17,7 @@ const Card: React.FC<CardProps> = ({ title, onClick }) => {
     border: "none",
     outline: "none",
     cursor: "pointer",
+    color: "#000",
     marginBottom: "10px",
   };
 
